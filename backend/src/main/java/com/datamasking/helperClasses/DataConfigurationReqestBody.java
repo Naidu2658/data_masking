@@ -21,7 +21,7 @@ public class DataConfigurationReqestBody {
         this.outputFileName = outputFileName;
     }
 
-    public String getOutputFileName() { 
+    public String getOutputFileName() {
         return outputFileName;
     }
 

@@ -54,7 +54,7 @@ public class ConfigurationFileGeneratorService {
             textMaskingObjectsList.add(tobje);
         }
 
-        TextMasking.addTextMaskingElementsToDocument(doc, rootElement, textMaskingObjectsList);
+        TextMasking.addTextMaskingElementsToDocument(doc, rootElement, textMaskingObjectsList, dataConfigurationReqestBody);
 
         try (FileOutputStream output =
                      new FileOutputStream(dataConfigurationReqestBody.getOutputFileName())) {

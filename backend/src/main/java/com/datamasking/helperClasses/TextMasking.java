@@ -19,11 +19,11 @@ public class TextMasking{
         return this.pattern;
     }
 
-    public static void addTextMaskingElementsToDocument(Document doc,Element rootElement, ArrayList<TextMasking> list){
+    public static void addTextMaskingElementsToDocument(Document doc,Element rootElement, ArrayList<TextMasking> list, DataConfigurationReqestBody dataConfigurationReqestBody){
 
         Element algorithm=doc.createElement("algorithm");
         rootElement.appendChild(algorithm);
-        algorithm.setAttribute("name", "TextMasking");
+        algorithm.setAttribute("name", dataConfigurationReqestBody.getAlgorithm());
 
         Element parameters=doc.createElement("parameters");
 
