@@ -5,16 +5,36 @@ import java.util.Arrays;
 
 public class DataConfigurationReqestBody {
 
+    String configurationName;
     String algorithm;
     String datasetPath;
     String schemaPath;
     Parameter []parameters;
+    String outputFileName;
 
-    public DataConfigurationReqestBody(String algorithm, String datasetPath, String schemaPath, Parameter[] parameters) {
+    public DataConfigurationReqestBody(String algorithm, String datasetPath, String schemaPath, Parameter[] parameters, String configurationName, String outputFileName) {
         this.algorithm = algorithm;
         this.datasetPath = datasetPath;
         this.schemaPath = schemaPath;
         this.parameters = parameters;
+        this.configurationName = configurationName;
+        this.outputFileName = outputFileName;
+    }
+
+    public String getOutputFileName() { 
+        return outputFileName;
+    }
+
+    public void setOutputFileName(String outputFileName) {
+        this.outputFileName = outputFileName;
+    }
+
+    public String getConfigurationName() {
+        return configurationName;
+    }
+
+    public void setConfigurationName(String configurationName) {
+        this.configurationName = configurationName;
     }
 
     public String getAlgorithm() {
