@@ -1,6 +1,4 @@
 package com.datamasking.services;
-
-import com.datamasking.helperClasses.DataConfigurationReqestBody;
 import com.datamasking.helperClasses.Parameter;
 import com.datamasking.helperClasses.TextMasking;
 import org.w3c.dom.Document;
@@ -15,6 +13,10 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
+
+import com.datamasking.helperClasses.DataConfigurationReqestBody;
+import org.w3c.dom.Text;
+
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -23,7 +25,6 @@ import java.util.ArrayList;
 public class ConfigurationFileGeneratorService {
 
     public void createConfiguration(DataConfigurationReqestBody dataConfigurationReqestBody) throws ParserConfigurationException {
-        System.out.println("in create config");
         DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
 
@@ -31,10 +32,8 @@ public class ConfigurationFileGeneratorService {
         Document doc = docBuilder.newDocument();
         Element rootElement = doc.createElement("configuration");
         doc.appendChild(rootElement);
-        System.out.println("Above dataconfig body");
-
         rootElement.setAttribute("name", dataConfigurationReqestBody.getConfigurationName());
-        System.out.println("BELOW DATA CONFIG BODY");
+
         Element srcxml=doc.createElement("source-xml");
         Element xmlpath=doc.createElement("path");
         xmlpath.setTextContent(dataConfigurationReqestBody.getDatasetPath());  //collect this from user
@@ -49,12 +48,8 @@ public class ConfigurationFileGeneratorService {
 
         ArrayList<TextMasking> textMaskingObjectsList=new ArrayList<TextMasking>();
 
-        System.out.println("Above for loop");
-        for (Parameter p: (Parameter[]) dataConfigurationReqestBody.getParameters())
+        for (Parameter p: dataConfigurationReqestBody.getParameters())
         {
-            System.out.println(p.toString());
-//            System.out.println(p.getElement());
-//            System.out.println(p.getValue());
             TextMasking tobje = new TextMasking(p.getElement(), p.getValue());
             textMaskingObjectsList.add(tobje);
         }
