@@ -1,17 +1,28 @@
 package com.datamasking.helperClasses;
 
+import java.util.Set;
+
 public class XmlUploadResponseBody {
-    String elements;
+    String xml;
+    Set<String> xPaths;
 
-    public XmlUploadResponseBody(String elements) {
-        this.elements = elements;
+    public Set<String> getxPaths() {
+        return xPaths;
     }
 
-    public String getElements() {
-        return elements;
+    public void setxPaths(Set<String> xPaths) {
+        this.xPaths = xPaths;
     }
 
-    public void setElements(String elements) {
-        this.elements = elements;
+    public XmlUploadResponseBody(String xml) {
+        this.xml = xml;
+    }
+
+    public String getXml() {
+        return xml;
+    }
+
+    public void setXml(String xml) {
+        this.xml = xml;
     }
 }

@@ -3,6 +3,7 @@ package com.datamasking.controllers;
 import com.datamasking.helperClasses.DataConfigurationReqestBody;
 import com.datamasking.helperClasses.XmlUploadResponseBody;
 import com.datamasking.services.ConfigurationFileGeneratorService;
+import com.datamasking.services.XPathGeneratorService;
 import org.apache.ws.commons.schema.XmlSchema;
 import org.apache.ws.commons.schema.XmlSchemaCollection;
 import org.apache.ws.commons.schema.XmlSchemaElement;
@@ -15,6 +16,7 @@ import javax.xml.transform.stream.StreamSource;
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.Map;
+import java.util.Set;
 
 @RestController
 public class DataConfigurationController {
@@ -30,16 +32,18 @@ public class DataConfigurationController {
     XmlUploadResponseBody sendElements(@RequestParam("file") MultipartFile file)
     {
         XmlUploadResponseBody xmlUploadResponseBody = new XmlUploadResponseBody("");
+        XPathGeneratorService xPathGeneratorService = new XPathGeneratorService();
         if (!file.isEmpty())
         {
             try {
                 byte[] bytes = file.getBytes();
                 String xmlString = new String(bytes);
-                System.out.println(xmlString);
-                xmlUploadResponseBody.setElements(xmlString);
+                Set<String> xPaths = xPathGeneratorService.generateXpaths(xmlString);
+                xmlUploadResponseBody.setxPaths(xPaths);
+                xmlUploadResponseBody.setXml(xmlString);
                 return xmlUploadResponseBody;
             }
-            catch (IOException e)
+            catch (Exception e)
             {
                 System.out.println(e.getMessage());
             }
