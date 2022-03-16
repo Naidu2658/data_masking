@@ -1,6 +1,5 @@
 package com.datamasking.services;
-import com.datamasking.helperClasses.Parameter;
-import com.datamasking.helperClasses.TextMasking;
+import com.datamasking.helperClasses.DataMaskingAlgorithm;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -15,12 +14,12 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
 import com.datamasking.helperClasses.DataConfigurationReqestBody;
-import org.w3c.dom.Text;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
+
 
 public class ConfigurationFileGeneratorService {
 
@@ -34,27 +33,18 @@ public class ConfigurationFileGeneratorService {
         doc.appendChild(rootElement);
         rootElement.setAttribute("name", dataConfigurationReqestBody.getConfigurationName());
 
-        Element srcxml=doc.createElement("source-xml");
-        Element xmlpath=doc.createElement("path");
-        xmlpath.setTextContent(dataConfigurationReqestBody.getDatasetPath());  //collect this from user
-        srcxml.appendChild(xmlpath);
-        rootElement.appendChild(srcxml);
+        //Fetch the things from front end
+        ArrayList<DataMaskingAlgorithm> algorithms_list=new ArrayList<DataMaskingAlgorithm>();
+        ArrayList<String> col_list=new ArrayList<>();
+        col_list.add("phone");
+        col_list.add("email");
+        ArrayList<String>parameters_list=new ArrayList<>();
+        parameters_list.add("#");
+        DataMaskingAlgorithm a1=new DataMaskingAlgorithm("TextMasking",parameters_list,col_list);
+        algorithms_list.add(a1);
 
-        Element srcxsd=doc.createElement("source-xsd");
-        Element xsdpath=doc.createElement("path");
-        xsdpath.setTextContent(dataConfigurationReqestBody.getSchemaPath()); //collect this from user
-        srcxsd.appendChild(xsdpath);
-        rootElement.appendChild(srcxsd);
-
-        ArrayList<TextMasking> textMaskingObjectsList=new ArrayList<TextMasking>();
-
-        for (Parameter p: dataConfigurationReqestBody.getParameters())
-        {
-            TextMasking tobje = new TextMasking(p.getElement(), p.getValue());
-            textMaskingObjectsList.add(tobje);
-        }
-
-        TextMasking.addTextMaskingElementsToDocument(doc, rootElement, textMaskingObjectsList, dataConfigurationReqestBody);
+        //Add the config specs collected from the frontend to the config.xml doc
+        DataMaskingAlgorithm.addAlgorithmParametersToXMLDocument(doc,rootElement,algorithms_list);
 
         try (FileOutputStream output =
                      new FileOutputStream(dataConfigurationReqestBody.getOutputFileName())) {

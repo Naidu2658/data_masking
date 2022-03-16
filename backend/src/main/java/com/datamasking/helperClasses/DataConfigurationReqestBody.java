@@ -12,7 +12,7 @@ public class DataConfigurationReqestBody {
     Parameter []parameters;
     String outputFileName;
 
-    public DataConfigurationReqestBody(String algorithm, String datasetPath, String schemaPath, Parameter[] parameters, String configurationName, String outputFileName) {
+    public DataConfigurationReqestBody(String algorithm, Parameter[] parameters, String configurationName, String outputFileName) {
         this.algorithm = algorithm;
         this.datasetPath = datasetPath;
         this.schemaPath = schemaPath;
