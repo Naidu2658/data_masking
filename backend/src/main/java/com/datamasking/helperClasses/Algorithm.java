@@ -1,15 +1,14 @@
 package com.datamasking.helperClasses;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Algorithm {
     String name;
-    String parameters[], paths[];
+    ArrayList<String> parameters, paths;
 
-    public Algorithm(String name, String[] parameters, String[] paths) {
-        this.name = name;
-        this.parameters = parameters;
-        this.paths = paths;
+    public Algorithm() {
+        name="";
     }
 
     public String getName() {
@@ -20,28 +19,19 @@ public class Algorithm {
         this.name = name;
     }
 
-    public String[] getParameters() {
+    public ArrayList<String> getParameters() {
         return parameters;
     }
 
-    public void setParameters(String[] parameters) {
+    public void setParameters(ArrayList<String> parameters) {
         this.parameters = parameters;
     }
 
-    public String[] getPaths() {
+    public ArrayList<String> getPaths() {
         return paths;
     }
 
-    public void setPaths(String[] paths) {
+    public void setPaths(ArrayList<String> paths) {
         this.paths = paths;
-    }
-
-    @Override
-    public String toString() {
-        return "Algorithm{" +
-                "name='" + name + '\'' +
-                ", parameters=" + Arrays.toString(parameters) +
-                ", paths=" + Arrays.toString(paths) +
-                '}';
     }
 }

@@ -1,15 +1,19 @@
 package com.datamasking.helperClasses;
 
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class DataConfigurationReqestBody {
 
     String configurationName;
-    Algorithm []algorithms;
+    ArrayList<Algorithm> algorithms;
     String outputFileName;
 
-    public DataConfigurationReqestBody(String configurationName, Algorithm[] algorithms, String outputFileName) {
+    public DataConfigurationReqestBody() {
+    }
+
+    public DataConfigurationReqestBody(String configurationName, ArrayList<Algorithm> algorithms, String outputFileName) {
         this.configurationName = configurationName;
         this.algorithms = algorithms;
         this.outputFileName = outputFileName;
@@ -23,11 +27,11 @@ public class DataConfigurationReqestBody {
         this.configurationName = configurationName;
     }
 
-    public Algorithm[] getAlgorithms() {
+    public ArrayList<Algorithm> getAlgorithms() {
         return algorithms;
     }
 
-    public void setAlgorithms(Algorithm[] algorithms) {
+    public void setAlgorithms(ArrayList<Algorithm> algorithms) {
         this.algorithms = algorithms;
     }
 
@@ -43,7 +47,7 @@ public class DataConfigurationReqestBody {
     public String toString() {
         return "DataConfigurationReqestBody{" +
                 "configurationName='" + configurationName + '\'' +
-                ", algorithms=" + Arrays.toString(algorithms) +
+                ", algorithms=" + new ArrayList<>(algorithms).toArray().toString() +
                 ", outputFileName='" + outputFileName + '\'' +
                 '}';
     }

@@ -3,14 +3,15 @@ package com.datamasking.helperClasses;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class DataMaskingAlgorithm {
     private String name;
-    private String []parameters;
-    private String []paths; //Attribute names (XPaths of the elements)in the instance document on which the algorithm has to be applied
+    private ArrayList<String>parameters;
+    private ArrayList<String>paths; //Attribute names (XPaths of the elements)in the instance document on which the algorithm has to be applied
 
-    public DataMaskingAlgorithm(String name, String []parameters, String []paths) {
+    public DataMaskingAlgorithm(String name, ArrayList<String> parameters, ArrayList<String> paths) {
         this.name = name;
         this.parameters = parameters;
         this.paths = paths;
@@ -24,19 +25,19 @@ public class DataMaskingAlgorithm {
         this.name = name;
     }
 
-    public String[] getParameters() {
+    public ArrayList<String> getParameters() {
         return parameters;
     }
 
-    public void setParameters(String[] parameters) {
+    public void setParameters(ArrayList<String> parameters) {
         this.parameters = parameters;
     }
 
-    public String[] getPaths() {
+    public ArrayList<String> getPaths() {
         return paths;
     }
 
-    public void setPaths(String[] paths) {
+    public void setPaths(ArrayList<String> paths) {
         this.paths = paths;
     }
 

@@ -3,6 +3,7 @@ package com.datamasking.controllers;
 import com.datamasking.helperClasses.DataConfigurationReqestBody;
 import com.datamasking.helperClasses.XmlUploadResponseBody;
 import com.datamasking.services.ConfigurationFileGeneratorService;
+import com.datamasking.services.RequestAggregatorService;
 import com.datamasking.services.XPathGeneratorService;
 import org.apache.ws.commons.schema.XmlSchema;
 import org.apache.ws.commons.schema.XmlSchemaCollection;
@@ -23,7 +24,7 @@ public class DataConfigurationController {
 
     @PostMapping("/configuration")
     String sendConfiguration(@RequestBody DataConfigurationReqestBody dataConfigurationReqestBody) throws ParserConfigurationException {
-        new ConfigurationFileGeneratorService().createConfiguration(dataConfigurationReqestBody);
+        new ConfigurationFileGeneratorService().createConfiguration(new RequestAggregatorService().aggregator(dataConfigurationReqestBody));
         return dataConfigurationReqestBody.toString();
     }
 
