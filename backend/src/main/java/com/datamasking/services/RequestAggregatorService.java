@@ -12,10 +12,8 @@ public class RequestAggregatorService {
     {
         ArrayList<Algorithm> algorithms = new ArrayList<>();
         Map<String, ArrayList<Algorithm>> mp = new HashMap<>();
-
         for (Algorithm algorithm: dataConfigurationReqestBody.getAlgorithms())
         {
-            System.out.println(algorithm.getName()+"::"+algorithm.getParameters().toString());
             ArrayList<Algorithm> algorithms1;
             if (mp.get(algorithm.getName()+"::"+algorithm.getParameters().toString()) == null) {
                 algorithms1 = new ArrayList<>();
@@ -27,7 +25,6 @@ public class RequestAggregatorService {
             algorithms1.add(algorithm);
             mp.put(algorithm.getName()+"::"+algorithm.getParameters().toString(), algorithms1);
         }
-
         for (Map.Entry<String, ArrayList<Algorithm>> entry: mp.entrySet())
         {
             Algorithm algorithm = new Algorithm();

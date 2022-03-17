@@ -3,13 +3,12 @@ package com.datamasking.helperClasses;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class DataMaskingAlgorithm {
     private String name;
-    private ArrayList<String>parameters;
-    private ArrayList<String>paths; //Attribute names (XPaths of the elements)in the instance document on which the algorithm has to be applied
+    private ArrayList<String> parameters;
+    private ArrayList<String> paths; //Attribute names (XPaths of the elements)in the instance document on which the algorithm has to be applied
 
     public DataMaskingAlgorithm(String name, ArrayList<String> parameters, ArrayList<String> paths) {
         this.name = name;
