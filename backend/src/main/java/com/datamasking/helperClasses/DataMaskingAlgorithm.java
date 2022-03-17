@@ -7,10 +7,10 @@ import java.util.ArrayList;
 
 public class DataMaskingAlgorithm {
     private String name;
-    private ArrayList<String> parameters;
-    private ArrayList<String> paths; //Attribute names (XPaths of the elements)in the instance document on which the algorithm has to be applied
+    private String []parameters;
+    private String []paths; //Attribute names (XPaths of the elements)in the instance document on which the algorithm has to be applied
 
-    public DataMaskingAlgorithm(String name, ArrayList<String> parameters, ArrayList<String> paths) {
+    public DataMaskingAlgorithm(String name, String []parameters, String []paths) {
         this.name = name;
         this.parameters = parameters;
         this.paths = paths;
@@ -24,19 +24,19 @@ public class DataMaskingAlgorithm {
         this.name = name;
     }
 
-    public ArrayList<String> getParameters() {
+    public String[] getParameters() {
         return parameters;
     }
 
-    public void setParameters(ArrayList<String> parameters) {
+    public void setParameters(String[] parameters) {
         this.parameters = parameters;
     }
 
-    public ArrayList<String> getPaths() {
+    public String[] getPaths() {
         return paths;
     }
 
-    public void setPaths(ArrayList<String> paths) {
+    public void setPaths(String[] paths) {
         this.paths = paths;
     }
 
