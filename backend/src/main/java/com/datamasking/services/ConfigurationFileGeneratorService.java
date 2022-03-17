@@ -1,4 +1,5 @@
 package com.datamasking.services;
+import com.datamasking.helperClasses.Algorithm;
 import com.datamasking.helperClasses.DataMaskingAlgorithm;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -19,6 +20,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 
 public class ConfigurationFileGeneratorService {
@@ -35,13 +37,11 @@ public class ConfigurationFileGeneratorService {
 
         //Fetch the things from front end
         ArrayList<DataMaskingAlgorithm> algorithms_list=new ArrayList<DataMaskingAlgorithm>();
-        ArrayList<String> col_list=new ArrayList<>();
-        col_list.add("phone");
-        col_list.add("email");
-        ArrayList<String>parameters_list=new ArrayList<>();
-        parameters_list.add("#");
-        DataMaskingAlgorithm a1=new DataMaskingAlgorithm("TextMasking",parameters_list,col_list);
-        algorithms_list.add(a1);
+        for (Algorithm algorithm: dataConfigurationReqestBody.getAlgorithms())
+        {
+            DataMaskingAlgorithm a1 = new DataMaskingAlgorithm(algorithm.getName(), algorithm.getParameters(), algorithm.getPaths());
+            algorithms_list.add(a1);
+        }
 
         //Add the config specs collected from the frontend to the config.xml doc
         DataMaskingAlgorithm.addAlgorithmParametersToXMLDocument(doc,rootElement,algorithms_list);
