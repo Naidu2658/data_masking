@@ -15,7 +15,8 @@ public class RequestAggregatorService {
         for (Algorithm algorithm: dataConfigurationReqestBody.getAlgorithms())
         {
             ArrayList<Algorithm> algorithms1;
-            if (mp.get(algorithm.getName()+"::"+algorithm.getParameters().toString()) == null) {
+            if (mp.get(algorithm.getName()+"::"+algorithm.getParameters().toString()) == null)
+            {
                 algorithms1 = new ArrayList<>();
             }
             else

@@ -21,7 +21,7 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 
 public class ArrayListToXMLService {
-    static void buildXMLFromArrayList(ArrayList<ArrayList<Pair>> elementsList) throws ParserConfigurationException {
+    static public void buildXMLFromArrayList(ArrayList<ArrayList<Pair>> elementsList) throws ParserConfigurationException {
         DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
 
