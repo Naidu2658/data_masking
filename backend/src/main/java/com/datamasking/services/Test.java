@@ -21,6 +21,7 @@ public class Test {
                     System.out.println(p.getFirst() +" : "+p.getSecond());
                 }
             }
+            ArrayListToXMLService.buildXMLFromArrayList(elementsList);
         }
        catch (Exception e){
             System.out.println(e.getMessage());
