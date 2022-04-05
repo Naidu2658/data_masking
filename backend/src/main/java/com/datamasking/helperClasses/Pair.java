@@ -4,23 +4,28 @@ public class Pair {
     private String first;
     private String second;
 
-    public String getSecond() {
+    public String getSecond()
+    {
         return second;
     }
 
-    public void setSecond(String second) {
+    public void setSecond(String second)
+    {
         this.second = second;
     }
 
-    public String getFirst() {
+    public String getFirst()
+    {
         return first;
     }
 
-    public void setFirst(String first) {
+    public void setFirst(String first)
+    {
         this.first = first;
     }
 
-    public Pair(String first, String second) {
+    public Pair(String first, String second)
+    {
         this.first = first;
         this.second = second;
     }
