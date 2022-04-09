@@ -1,44 +1,66 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<contacts>
-    <contact>
-        <name>
-            <first>Craig</first>
-            <last>Rafter</last>
-        </name>
-        <location>
-            <address>Redlands, CA, USA</address>
-            <latitude>34.031892</latitude>
-            <longitude>-117.207642</longitude>
-        </location>
-        <phone>001-909-555-1212</phone>
-        <description>
-            <em>4th edition</em>
-            <strong>loves</strong>
-        </description>
-    </contact>
-    <contact>
-        <name>
-            <first>David</first>
-            <last>Hunter</last>
-        </name>
-        <location>
-            <address>Address is not known</address>
-        </location>
-        <phone>416 555 1212</phone>
-        <description>Senior Technical Consultant for CGI.</description>
-    </contact>
-    <contact>
-        <name>
-            <first>Daniel</first>
-            <middle>John</middle>
-            <last>Ayers</last>
-        </name>
-        <location>
-            <latitude>43.847156</latitude>
-            <longitude>10.50808</longitude>
-            <address>Mozzanella, 7 Castiglione di Garfagnana, 55033 Lucca Italy</address>
-        </location>
-        <phone>+39-0555-11-22-33-</phone>
-        <description>A Semantic Web developer and technical author specializing in cutting-edge technologies.</description>
-    </contact>
-</contacts>
+<patients>
+    <patient>
+        <name>patrick</name>
+        <postcode>SW123</postcode>
+        <age>21</age>
+        <gender>male</gender>
+        <disease>**</disease>
+    </patient>
+    <patient>
+        <name>sebastian</name>
+        <postcode>SW123</postcode>
+        <age>24</age>
+        <gender>male</gender>
+        <disease>**</disease>
+    </patient>
+    <patient>
+        <name>reece</name>
+        <postcode>SW123</postcode>
+        <age>26</age>
+        <gender>male</gender>
+        <disease>**</disease>
+    </patient>
+    <patient>
+        <name>Tilly</name>
+        <postcode>NW10</postcode>
+        <age>22</age>
+        <gender>female</gender>
+        <disease>CR</disease>
+    </patient>
+    <patient>
+        <name>Aby</name>
+        <postcode>NW10</postcode>
+        <age>21</age>
+        <gender>female</gender>
+        <disease>NI</disease>
+    </patient>
+    <patient>
+        <name>Eliesse</name>
+        <postcode>NW10</postcode>
+        <age>22</age>
+        <gender>female</gender>
+        <disease>CV</disease>
+    </patient>
+    <patient>
+        <name>Morgan</name>
+        <postcode>E17</postcode>
+        <age>27</age>
+        <gender>female</gender>
+        <disease>RP</disease>
+    </patient>
+    <patient>
+        <name>George</name>
+        <postcode>E17</postcode>
+        <age>29</age>
+        <gender>male</gender>
+        <disease>LR</disease>
+    </patient>
+    <patient>
+        <name>Sienna</name>
+        <postcode>E17</postcode>
+        <age>42</age>
+        <gender>male</gender>
+        <disease>CR</disease>
+    </patient>
+</patients>
