@@ -59,18 +59,31 @@ public class TclosenessService {
             }
         }
 
-        Map<String, Set<String>> sacount=new HashMap<>();
-        String sa=ldrb.getSas();
-        System.out.println(sa);
-        System.out.println(columnMapping.get(sa));
-        int sai=columnMapping.get(sa);
+        Map<String, Set<String>> unique_sensitive_attribute_count=new HashMap<>();
+       /// String sa=ldrb.getSas();
+       // System.out.println(sa);
+       // System.out.println(columnMapping.get(sa));
+     //   int sai=columnMapping.get(sa);
 
         Set<String> unique_sa= new HashSet<>();
 
-        for(int i=0;i<xmlArrayFull.length;i++)
-        {
-            unique_sa.add(xmlArrayFull[i][sai]);
-        }
+
+
+            for(int j=0;j<xmlArrayFull.length;j++)
+            {
+                StringBuilder sensitive_attributes_as_string=new StringBuilder("");
+                for(int f=0;f<ldrb.getSensitive_attributes().size();f++)
+                {
+                    if(xmlArrayFull[j][columnMapping.get(ldrb.getSensitive_attributes().get(f))]!=null)
+                    {
+                        sensitive_attributes_as_string.append(xmlArrayFull[j][columnMapping.get(ldrb.getSensitive_attributes().get(f))]);
+                    }
+                    unique_sa.add(sensitive_attributes_as_string.toString());
+                    System.out.println("sab"+ sensitive_attributes_as_string);
+                }
+            }
+
+
 
         int unique_count= unique_sa.size();
         System.out.println("uniuq count:"+ unique_count);
@@ -78,6 +91,7 @@ public class TclosenessService {
         {
 
             StringBuilder qa=new StringBuilder("");
+            StringBuilder sensitive_attributes_as_string=new StringBuilder("");
             for(int j=0;j<ldrb.getxPaths().size();j++)
             {
 
@@ -86,16 +100,24 @@ public class TclosenessService {
                     // System.out.println(xmlArrayFull[i][columnMapping.get(ldrb.getxPaths().get(j))]+ "inside if");
                 }
             }
+            for(int f=0;f<ldrb.getSensitive_attributes().size();f++)
+            {
+                if(xmlArrayFull[i][columnMapping.get(ldrb.getSensitive_attributes().get(f))]!=null)
+                {
+                    sensitive_attributes_as_string.append(xmlArrayFull[i][columnMapping.get(ldrb.getSensitive_attributes().get(f))]);
+                }
+                System.out.println("sab"+ sensitive_attributes_as_string);
+            }
             // System.out.println("world");
-            if (sacount.containsKey(qa.toString())) {
+            if (unique_sensitive_attribute_count.containsKey(qa.toString())) {
                 //  System.out.println(sacount.get(qa.toString())+ "this is qa");
-                sacount.get(qa.toString()).add(xmlArrayFull[i][sai]);
+                unique_sensitive_attribute_count.get(qa.toString()).add(sensitive_attributes_as_string.toString());
             }
             else
             {
                 Set<String> st=new HashSet<>();
-                st.add(xmlArrayFull[i][sai]);
-                sacount.put(qa.toString(), st);
+                st.add(sensitive_attributes_as_string.toString());
+                unique_sensitive_attribute_count.put(qa.toString(), st);
                 //    System.out.println("inside else");
             }
         }
@@ -110,13 +132,17 @@ public class TclosenessService {
                     qa.append(xmlArrayFull[i][columnMapping.get(ldrb.getxPaths().get(j))]);
             }
 
-            if(sacount.containsKey(qa.toString()) &&  (unique_count-sacount.get(qa.toString()).size()) <= ldrb.getT())
+            if(unique_sensitive_attribute_count.containsKey(qa.toString()) &&  (unique_count-unique_sensitive_attribute_count.get(qa.toString()).size()) <= ldrb.getT())
             {
-                int temp=unique_count-sacount.get(qa.toString()).size();
+                int temp=unique_count-unique_sensitive_attribute_count.get(qa.toString()).size();
                 System.out.println("set size " + qa + "  " +  temp);
                 continue;
             }
-            xmlArrayFull[i][columnMapping.get(sa)]="**";
+            for(String e : ldrb.getSensitive_attributes())
+            {
+                xmlArrayFull[i][columnMapping.get(e)]="**";
+            }
+
         }
 
         for (int i=0; i<rows; i++)
