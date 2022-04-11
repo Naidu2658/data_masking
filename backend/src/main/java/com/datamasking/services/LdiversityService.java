@@ -58,16 +58,20 @@ public class LdiversityService {
         }
 
         Map<String, Set<String>> sacount=new HashMap<>();
-        String sa=ldrb.getSas();
+        //String sa=ldrb.getSas();
+       // ArrayList<Integer> sa=new ArrayList<>();
+
+
        // System.out.println(sa);
         //System.out.println(columnMapping.get(sa));
-        int sai=columnMapping.get(sa);
+        //int sai=columnMapping.get(sa);
 
 
         for(int i=0;i<xmlArrayFull.length;i++)
         {
 
             StringBuilder qa=new StringBuilder("");
+            StringBuilder sab=new StringBuilder("");
             for(int j=0;j<ldrb.getxPaths().size();j++)
             {
 
@@ -75,16 +79,25 @@ public class LdiversityService {
                     qa.append(xmlArrayFull[i][columnMapping.get(ldrb.getxPaths().get(j))]);
                    // System.out.println(xmlArrayFull[i][columnMapping.get(ldrb.getxPaths().get(j))]+ "inside if");
                 }
+
+            }
+            for(int f=0;f<ldrb.getSas().size();f++)
+            {
+                if(xmlArrayFull[i][columnMapping.get(ldrb.getSas().get(f))]!=null)
+                {
+                    sab.append(xmlArrayFull[i][columnMapping.get(ldrb.getSas().get(f))]);
+                }
+                System.out.println("sab"+ sab);
             }
            // System.out.println("world");
             if (sacount.containsKey(qa.toString())) {
               //  System.out.println(sacount.get(qa.toString())+ "this is qa");
-                sacount.get(qa.toString()).add(xmlArrayFull[i][sai]);
+                sacount.get(qa.toString()).add(sab.toString());
             }
             else
             {
                 Set<String> st=new HashSet<>();
-                st.add(xmlArrayFull[i][sai]);
+                st.add(sab.toString());
                 sacount.put(qa.toString(), st);
             //    System.out.println("inside else");
             }
@@ -93,7 +106,7 @@ public class LdiversityService {
      //   System.out.println("world1");
         for(int i=0;i<xmlArrayFull.length;i++)
         {
-            StringBuilder qa=new StringBuilder("");;
+            StringBuilder qa=new StringBuilder("");
             for(int j=0;j<ldrb.getxPaths().size();j++)
             {
                 if(xmlArrayFull[i][columnMapping.get(ldrb.getxPaths().get(j))]!=null)
@@ -104,7 +117,11 @@ public class LdiversityService {
             {
                 continue;
             }
-            xmlArrayFull[i][columnMapping.get(sa)]="**";
+            for(String e : ldrb.getSas())
+            {
+                xmlArrayFull[i][columnMapping.get(e)]="**";
+            }
+
         }
 
         for (int i=0; i<rows; i++)
