@@ -14,7 +14,7 @@ public class LdiversityRequestBody {
 
     Integer l;
     ArrayList<String> xPaths;
-    ArrayList<String> sas; //sensitive attributes
+    ArrayList<String> sensitive_attributes; //sensitive attributes
 
     public Integer getL() {
         return l;
@@ -24,20 +24,20 @@ public class LdiversityRequestBody {
         this.l = l;
     }
 
-    public LdiversityRequestBody(MultipartFile xmlFile, Integer k, Integer l, ArrayList<String> xPaths, ArrayList<String> sas) {
+    public LdiversityRequestBody(MultipartFile xmlFile, Integer k, Integer l, ArrayList<String> xPaths, ArrayList<String> sensitive_attributes) {
         this.xmlFile = xmlFile;
         this.k = k;
         this.l = l;
         this.xPaths = xPaths;
-        this.sas = sas;
+        this.sensitive_attributes = sensitive_attributes;
     }
 
     public ArrayList<String> getSas() {
-        return sas;
+        return sensitive_attributes;
     }
 
-    public void setSas(ArrayList<String> sas) {
-        this.sas = sas;
+    public void setSas(ArrayList<String> sensitive_attributes) {
+        this.sensitive_attributes = sensitive_attributes;
     }
 
     public MultipartFile getXmlFile() {

@@ -57,7 +57,7 @@ public class LdiversityService {
             }
         }
 
-        Map<String, Set<String>> sacount=new HashMap<>();
+        Map<String, Set<String>> unique_sensitive_attribute_count=new HashMap<>();
         //String sa=ldrb.getSas();
        // ArrayList<Integer> sa=new ArrayList<>();
 
@@ -70,13 +70,13 @@ public class LdiversityService {
         for(int i=0;i<xmlArrayFull.length;i++)
         {
 
-            StringBuilder qa=new StringBuilder("");
-            StringBuilder sab=new StringBuilder("");
+            StringBuilder qausi_identifier=new StringBuilder("");
+            StringBuilder sensitive_attributes_as_string=new StringBuilder("");
             for(int j=0;j<ldrb.getxPaths().size();j++)
             {
 
                 if(xmlArrayFull[i][columnMapping.get(ldrb.getxPaths().get(j))]!=null) {
-                    qa.append(xmlArrayFull[i][columnMapping.get(ldrb.getxPaths().get(j))]);
+                    qausi_identifier.append(xmlArrayFull[i][columnMapping.get(ldrb.getxPaths().get(j))]);
                    // System.out.println(xmlArrayFull[i][columnMapping.get(ldrb.getxPaths().get(j))]+ "inside if");
                 }
 
@@ -85,20 +85,20 @@ public class LdiversityService {
             {
                 if(xmlArrayFull[i][columnMapping.get(ldrb.getSas().get(f))]!=null)
                 {
-                    sab.append(xmlArrayFull[i][columnMapping.get(ldrb.getSas().get(f))]);
+                    sensitive_attributes_as_string.append(xmlArrayFull[i][columnMapping.get(ldrb.getSas().get(f))]);
                 }
-                System.out.println("sab"+ sab);
+                System.out.println("sab"+ sensitive_attributes_as_string);
             }
            // System.out.println("world");
-            if (sacount.containsKey(qa.toString())) {
+            if (unique_sensitive_attribute_count.containsKey(qausi_identifier.toString())) {
               //  System.out.println(sacount.get(qa.toString())+ "this is qa");
-                sacount.get(qa.toString()).add(sab.toString());
+                unique_sensitive_attribute_count.get(qausi_identifier.toString()).add(sensitive_attributes_as_string.toString());
             }
             else
             {
                 Set<String> st=new HashSet<>();
-                st.add(sab.toString());
-                sacount.put(qa.toString(), st);
+                st.add(sensitive_attributes_as_string.toString());
+                unique_sensitive_attribute_count.put(qausi_identifier.toString(), st);
             //    System.out.println("inside else");
             }
         }
@@ -106,14 +106,14 @@ public class LdiversityService {
      //   System.out.println("world1");
         for(int i=0;i<xmlArrayFull.length;i++)
         {
-            StringBuilder qa=new StringBuilder("");
+            StringBuilder qausi_identifier=new StringBuilder("");
             for(int j=0;j<ldrb.getxPaths().size();j++)
             {
                 if(xmlArrayFull[i][columnMapping.get(ldrb.getxPaths().get(j))]!=null)
-                qa.append(xmlArrayFull[i][columnMapping.get(ldrb.getxPaths().get(j))]);
+                    qausi_identifier.append(xmlArrayFull[i][columnMapping.get(ldrb.getxPaths().get(j))]);
             }
 
-            if(sacount.containsKey(qa.toString()) &&  sacount.get(qa.toString()).size() >= ldrb.getL())
+            if(unique_sensitive_attribute_count.containsKey(qausi_identifier.toString()) &&  unique_sensitive_attribute_count.get(qausi_identifier.toString()).size() >= ldrb.getL())
             {
                 continue;
             }
