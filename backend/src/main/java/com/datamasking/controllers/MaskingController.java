@@ -1,13 +1,6 @@
 package com.datamasking.controllers;
-
-
-import com.datamasking.helperClasses.KAnonymityRequestBody;
-import com.datamasking.helperClasses.LdiversityRequestBody;
-import com.datamasking.helperClasses.MaskingRequestBody;
-import com.datamasking.services.ArrayListToXMLService;
-import com.datamasking.services.KAnonymityService;
-import com.datamasking.services.LdiversityService;
-import com.datamasking.services.MaskingService;
+import com.datamasking.helperClasses.*;
+import com.datamasking.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -62,6 +55,34 @@ public class MaskingController {
 //        }
 //        System.out.println("anon:"+ xmlString);
         new ArrayListToXMLService().buildXMLFromArrayList(new LdiversityService().applyAlgorithm(ldrb));
+
+        return "";
+
+
+    }
+
+    @PostMapping("/applytcloseness")
+    @CrossOrigin(origins = {"*"})
+    String applyTcloseness(TclosenessRequestBody ldrb) throws ParserConfigurationException
+    {
+        System.out.println("hii");
+        KAnonymityRequestBody kanrb= new KAnonymityRequestBody();
+        kanrb.setK(ldrb.getK());
+        kanrb.setxPaths(ldrb.getxPaths());
+        kanrb.setXmlFile((ldrb.getXmlFile()));
+
+        new ArrayListToXMLService().buildXMLFromArrayList(new KAnonymityService().applyAlgorithm(kanrb));
+//        String xmlString = "";
+//        try {
+//            File file = new File("Anonymized.xml");
+//            xmlString = new String(Files.readAllBytes(file.toPath()));
+//        }
+//        catch (Exception e)
+//        {
+//            e.printStackTrace();
+//        }
+//        System.out.println("anon:"+ xmlString);
+        new ArrayListToXMLService().buildXMLFromArrayList(new TclosenessService().applyAlgorithm(ldrb));
 
         return "";
 
