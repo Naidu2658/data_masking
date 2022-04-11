@@ -2,20 +2,29 @@ package com.datamasking.services;
 
 import com.datamasking.helperClasses.KAnonymityRequestBody;
 import com.datamasking.helperClasses.Pair;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.swing.plaf.synth.SynthTabbedPaneUI;
 import javax.xml.parsers.ParserConfigurationException;
 import java.util.*;
 
+@Service
 public class KAnonymityService {
+
+    @Autowired
+    private XMLToArrayListService xmlToArrayListService;
+
     public ArrayList<ArrayList<Pair>> applyAlgorithm(KAnonymityRequestBody kAnonymityRequestBody) throws ParserConfigurationException
     {
         String xmlString = new MultipartFileToStringService().convert(kAnonymityRequestBody.getXmlFile());
-        ArrayList<ArrayList<Pair>> xmlArray = new XMLToArrayListService().getElementList(xmlString);
+        ArrayList<ArrayList<Pair>> xmlArray = xmlToArrayListService.getElementList(xmlString);
         Set<String> uniqueXPaths = new HashSet<>();
         for (ArrayList<Pair> a: xmlArray)
         {
-            for (Pair p : a) {
+            for (Pair p : a)
+            {
                 uniqueXPaths.add(p.getFirst());
             }
         }
@@ -33,42 +42,49 @@ public class KAnonymityService {
         }
         for (int i=0; i<rows; i++)
         {
-            for (Pair p: xmlArray.get(i))
+            for (Pair p : xmlArray.get(i))
             {
                 xmlArrayFull[i][columnMapping.get(p.getFirst())] = p.getSecond();
             }
         }
-        for (String s: kAnonymityRequestBody.getxPaths())
+
+        Map<String, Integer> rowValueCount = new HashMap<>();
+
+        for (int row=0; row<rows; row++)
         {
-            Map<String, Integer> valueCount = new HashMap<>();
-            for (int i=0; i<rows; i++)
+            String rowValue = "";
+            for (String s: kAnonymityRequestBody.getxPaths())
             {
-                String rowValue = xmlArrayFull[i][columnMapping.get(s)];
-                if (valueCount.containsKey(rowValue))
-                {
-                    valueCount.put(rowValue, valueCount.get(rowValue) + 1);
-                }
-                else
-                    valueCount.put(rowValue, 1);
+                rowValue += (":"+xmlArrayFull[row][columnMapping.get(s)]);
             }
-            Boolean satisfies = true;
-            for (Map.Entry<String, Integer> entry: valueCount.entrySet())
+            if (rowValueCount.containsKey(rowValue))
+                rowValueCount.put(rowValue, rowValueCount.get(rowValue)+1);
+            else
+                rowValueCount.put(rowValue, 1);
+        }
+
+        Boolean satisfies = true;
+
+        for (Map.Entry<String, Integer> entry: rowValueCount.entrySet())
+        {
+            if (entry.getValue() < kAnonymityRequestBody.getK())
             {
-                if (entry.getValue() < kAnonymityRequestBody.getK())
-                {
-                    satisfies = false;
-                    break;
-                }
+                satisfies = false;
+                break;
             }
-            if (!satisfies)
+        }
+
+        if (!satisfies)
+        {
+            for (int row = 0; row<rows; row++)
             {
-                int col = columnMapping.get(s);
-                for (int i=0; i<rows; i++)
+                for (String s: kAnonymityRequestBody.getxPaths())
                 {
-                    xmlArrayFull[i][col] = "**";
+                    xmlArrayFull[row][columnMapping.get(s)] = "**";
                 }
             }
         }
+
         for (int i=0; i<rows; i++)
         {
             int col = xmlArray.get(i).size();

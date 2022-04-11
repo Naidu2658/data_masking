@@ -1,6 +1,7 @@
 package com.datamasking.services;
 
 import com.datamasking.helperClasses.Pair;
+import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -12,7 +13,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.io.StringReader;
 import java.util.ArrayList;
 
-
+@Service
 public class XMLToArrayListService {
     public static ArrayList<ArrayList<Pair>> getElementList (String xmlstring) throws ParserConfigurationException
     {
