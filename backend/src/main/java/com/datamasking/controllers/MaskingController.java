@@ -8,6 +8,7 @@ import com.datamasking.services.ArrayListToXMLService;
 import com.datamasking.services.KAnonymityService;
 import com.datamasking.services.LdiversityService;
 import com.datamasking.services.MaskingService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,6 +18,13 @@ import javax.xml.parsers.ParserConfigurationException;
 
 @RestController
 public class MaskingController {
+
+    @Autowired
+    private KAnonymityService kAnonymityService;
+
+    @Autowired
+    private ArrayListToXMLService arrayListToXMLService;
+
     @PostMapping("/applyMasking")
     @CrossOrigin(origins = {"*"})
     String applyMasking(@RequestBody MaskingRequestBody maskingRequestBody)
@@ -28,7 +36,7 @@ public class MaskingController {
     @CrossOrigin(origins = {"*"})
     String applyKAnonymity(KAnonymityRequestBody kAnonymityRequestBody) throws ParserConfigurationException
     {
-        new ArrayListToXMLService().buildXMLFromArrayList(new KAnonymityService().applyAlgorithm(kAnonymityRequestBody));
+        arrayListToXMLService.buildXMLFromArrayList(kAnonymityService.applyAlgorithm(kAnonymityRequestBody));
         return "";
     }
 

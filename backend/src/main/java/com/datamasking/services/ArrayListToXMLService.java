@@ -1,6 +1,7 @@
 package com.datamasking.services;
 
 import com.datamasking.helperClasses.Pair;
+import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -20,6 +21,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
 
+@Service
 public class ArrayListToXMLService {
     static public void buildXMLFromArrayList(ArrayList<ArrayList<Pair>> elementsList) throws ParserConfigurationException {
         DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
@@ -83,7 +85,7 @@ public class ArrayListToXMLService {
             }
         }
         if(currentNode!=null){
-            System.out.println(p.getSecond());
+//            System.out.println(p.getSecond());
             currentNode.setTextContent(p.getSecond());
         }
     }
