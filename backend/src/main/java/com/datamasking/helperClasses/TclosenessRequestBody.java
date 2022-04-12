@@ -10,18 +10,18 @@ public class TclosenessRequestBody {
     Integer k;
     Integer t;
     ArrayList<String> xPaths;
-    String sas; //sensitive attributes
+    ArrayList<String> sensitive_attributes; //sensitive attributes
 
     public void setXmlFile(MultipartFile xmlFile) {
         this.xmlFile = xmlFile;
     }
 
-    public TclosenessRequestBody(MultipartFile xmlFile, Integer k, Integer t, ArrayList<String> xPaths, String sas) {
+    public TclosenessRequestBody(MultipartFile xmlFile, Integer k, Integer t, ArrayList<String> xPaths, ArrayList<String> sensitive_attributes) {
         this.xmlFile = xmlFile;
         this.k = k;
         this.t = t;
         this.xPaths = xPaths;
-        this.sas = sas;
+        this.sensitive_attributes = sensitive_attributes;
     }
 
     @Override
@@ -31,7 +31,7 @@ public class TclosenessRequestBody {
                 ", k=" + k +
                 ", t=" + t +
                 ", xPaths=" + xPaths +
-                ", sas='" + sas + '\'' +
+                ", sensitive_attributes=" + sensitive_attributes +
                 '}';
     }
 
@@ -47,8 +47,8 @@ public class TclosenessRequestBody {
         this.xPaths = xPaths;
     }
 
-    public void setSas(String sas) {
-        this.sas = sas;
+    public ArrayList<String> getSensitive_attributes() {
+        return sensitive_attributes;
     }
 
     public MultipartFile getXmlFile() {
@@ -67,7 +67,7 @@ public class TclosenessRequestBody {
         return xPaths;
     }
 
-    public String getSas() {
-        return sas;
+    public void setSensitive_attributes(ArrayList<String> sensitive_attributes) {
+        this.sensitive_attributes = sensitive_attributes;
     }
 }
