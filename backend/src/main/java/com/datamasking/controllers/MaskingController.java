@@ -6,8 +6,11 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.xml.parsers.ParserConfigurationException;
+import java.io.File;
+import java.io.FileInputStream;
 
 @RestController
 public class MaskingController {
@@ -17,6 +20,15 @@ public class MaskingController {
 
     @Autowired
     private ArrayListToXMLService arrayListToXMLService;
+
+    @Autowired
+    private LdiversityService ldiversityService;
+
+    @Autowired
+    private TclosenessService tclosenessService;
+
+    @Autowired
+    private NumericGeneralizationService numericGeneralizationService;
 
     @PostMapping("/applyMasking")
     @CrossOrigin(origins = {"*"})
@@ -37,55 +49,56 @@ public class MaskingController {
     @CrossOrigin(origins = {"*"})
     String applyLdiversity(LdiversityRequestBody ldrb) throws ParserConfigurationException
     {
-        System.out.println("hii");
         KAnonymityRequestBody kanrb= new KAnonymityRequestBody();
         kanrb.setK(ldrb.getK());
         kanrb.setxPaths(ldrb.getxPaths());
         kanrb.setXmlFile((ldrb.getXmlFile()));
-
-        new ArrayListToXMLService().buildXMLFromArrayList(new KAnonymityService().applyAlgorithm(kanrb));
-//        String xmlString = "";
-//        try {
-//            File file = new File("Anonymized.xml");
-//            xmlString = new String(Files.readAllBytes(file.toPath()));
-//        }
-//        catch (Exception e)
-//        {
-//            e.printStackTrace();
-//        }
-//        System.out.println("anon:"+ xmlString);
-        new ArrayListToXMLService().buildXMLFromArrayList(new LdiversityService().applyAlgorithm(ldrb));
-
+        arrayListToXMLService.buildXMLFromArrayList(kAnonymityService.applyAlgorithm(kanrb));
+        arrayListToXMLService.buildXMLFromArrayList(ldiversityService.applyAlgorithm(ldrb));
         return "";
-
-
     }
 
-    @PostMapping("/applytcloseness")
+    @PostMapping("/applyTcloseness")
     @CrossOrigin(origins = {"*"})
     String applyTcloseness(TclosenessRequestBody ldrb) throws ParserConfigurationException
     {
-        System.out.println("hii");
         KAnonymityRequestBody kanrb= new KAnonymityRequestBody();
         kanrb.setK(ldrb.getK());
         kanrb.setxPaths(ldrb.getxPaths());
         kanrb.setXmlFile((ldrb.getXmlFile()));
-
-        new ArrayListToXMLService().buildXMLFromArrayList(new KAnonymityService().applyAlgorithm(kanrb));
-//        String xmlString = "";
-//        try {
-//            File file = new File("Anonymized.xml");
-//            xmlString = new String(Files.readAllBytes(file.toPath()));
-//        }
-//        catch (Exception e)
-//        {
-//            e.printStackTrace();
-//        }
-//        System.out.println("anon:"+ xmlString);
-        new ArrayListToXMLService().buildXMLFromArrayList(new TclosenessService().applyAlgorithm(ldrb));
-
+        arrayListToXMLService.buildXMLFromArrayList(kAnonymityService.applyAlgorithm(kanrb));
+        arrayListToXMLService.buildXMLFromArrayList(tclosenessService.applyAlgorithm(ldrb));
         return "";
+    }
 
+    @PostMapping("/applyNumericGeneralization")
+    @CrossOrigin(origins = {"*"})
+    String applyNumericGeneralization(NumericGeneralizationRequestBody numericGeneralizationRequestBody) throws ParserConfigurationException
+    {
+        arrayListToXMLService.buildXMLFromArrayList(numericGeneralizationService.applyNumericGeneralization(numericGeneralizationRequestBody));
+        return "";
+    }
 
+    @PostMapping("/applyMultiMasking")
+    @CrossOrigin(origins = {"*"})
+    String applyMultiMasking(MultipleMaskingRequestBody multipleMaskingRequestBody) throws ParserConfigurationException, Fil
+    {
+        for (AlgorithmItem algorithmItem: multipleMaskingRequestBody.getAlgorithms())
+        {
+            if (algorithmItem.getAlgo() == "datamasking")
+            {
+
+            }
+            else if (algorithmItem.getAlgo() == "kanonymity")
+                applyKAnonymity(new KAnonymityRequestBody(multipleMaskingRequestBody.getXmlFile(), algorithmItem.getK(), algorithmItem.getxPaths()));
+            else if (algorithmItem.getAlgo() == "ldiversity")
+                applyLdiversity(new LdiversityRequestBody(multipleMaskingRequestBody.getXmlFile(), algorithmItem.getK(), algorithmItem.getL(), algorithmItem.getxPaths(), algorithmItem.getSensitive_attributes()));
+            else if (algorithmItem.getAlgo() == "tcloseness")
+                applyTcloseness(new TclosenessRequestBody(multipleMaskingRequestBody.getXmlFile(), algorithmItem.getK(), algorithmItem.getT(), algorithmItem.getxPaths(), algorithmItem.getSensitive_attributes()));
+            else if (algorithmItem.getAlgo() == "numericgeneralization")
+                applyNumericGeneralization(new NumericGeneralizationRequestBody(multipleMaskingRequestBody.getXmlFile(), algorithmItem.getxPaths(), algorithmItem.getRangeMax(), algorithmItem.getK()));
+            MultipartFile outputFile = new org.springframework.mock.web.MockMultipartFile("sds", new FileInputStream(new File("/Anonymized.xml")));
+        }
+        return "";
     }
 }

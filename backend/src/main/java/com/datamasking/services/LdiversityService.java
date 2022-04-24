@@ -2,12 +2,14 @@ package com.datamasking.services;
 
 import com.datamasking.helperClasses.LdiversityRequestBody;
 import com.datamasking.helperClasses.Pair;
+import org.springframework.stereotype.Service;
 
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 import java.nio.file.Files;
 import java.util.*;
 
+@Service
 public class LdiversityService {
     public ArrayList<ArrayList<Pair>> applyAlgorithm(LdiversityRequestBody ldrb) throws ParserConfigurationException
     {
