@@ -20,6 +20,23 @@ public class AlgorithmItem {
         this.rangeMax = rangeMax;
     }
 
+    @Override
+    public String toString() {
+        return "AlgorithmItem{" +
+                "algo='" + algo + '\'' +
+                ", k=" + k +
+                ", l=" + l +
+                ", t=" + t +
+                ", pattern='" + pattern + '\'' +
+                ", sensitive_attributes=" + sensitive_attributes +
+                ", xPaths=" + xPaths +
+                ", rangeMax=" + rangeMax +
+                '}';
+    }
+
+    public AlgorithmItem() {
+    }
+
     public AlgorithmItem(String algo, Integer k, Integer l, Integer t, String pattern, ArrayList<String> sensitive_attributes, ArrayList<String> xPaths, ArrayList<Integer> rangeMax) {
         this.algo = algo;
         this.k = k;
