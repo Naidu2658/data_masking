@@ -33,11 +33,15 @@ public class MaskingController {
     @Autowired
     private NumericGeneralizationService numericGeneralizationService;
 
-    @PostMapping("/applyMasking")
+    @Autowired
+    private TextMaskingService textMaskingService;
+    
+    @PostMapping("/applyTextMasking")
     @CrossOrigin(origins = {"*"})
-    String applyMasking(@RequestBody MaskingRequestBody maskingRequestBody)
+    String applyMasking(@RequestBody TextMaskingRequestBody textMaskingRequestBody) throws ParserConfigurationException
     {
-        return new MaskingService().mask(maskingRequestBody);
+        arrayListToXMLService.buildXMLFromArrayList(textMaskingService.applyAlgorithm(textMaskingRequestBody));
+        return "";
     }
 
     @PostMapping("/applyKAnonymity")

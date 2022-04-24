@@ -5,7 +5,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class MultipartFileToStringService {
-    String convert(MultipartFile file)
+    public String convert(MultipartFile file)
     {
         try {
             byte[] bytes = file.getBytes();
