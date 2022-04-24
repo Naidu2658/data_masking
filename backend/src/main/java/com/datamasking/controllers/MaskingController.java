@@ -38,7 +38,7 @@ public class MaskingController {
     
     @PostMapping("/applyTextMasking")
     @CrossOrigin(origins = {"*"})
-    String applyMasking(@RequestBody TextMaskingRequestBody textMaskingRequestBody) throws ParserConfigurationException
+    String applyMasking(TextMaskingRequestBody textMaskingRequestBody) throws ParserConfigurationException
     {
         arrayListToXMLService.buildXMLFromArrayList(textMaskingService.applyAlgorithm(textMaskingRequestBody));
         return "";

@@ -2,8 +2,6 @@ package com.datamasking.services;
 
 import com.datamasking.helperClasses.TextMaskingRequestBody;
 import com.datamasking.helperClasses.Pair;
-import com.datamasking.services.MultipartFileToStringService;
-import com.datamasking.services.XMLToArrayListService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -58,6 +56,18 @@ public class TextMaskingService {
                 else xmlArrayFull[i][columnMapping.get(p.getFirst())] = p.getSecond();
             }
         }
+
+        for (int i=0; i<rows; i++)
+        {
+            int col = xmlArray.get(i).size();
+            for (int j=0; j<col; j++)
+            {
+                Pair p = xmlArray.get(i).get(j);
+                p.setSecond(xmlArrayFull[i][columnMapping.get(p.getFirst())]);
+                xmlArray.get(i).set(j, p);
+            }
+        }
+
         return xmlArray;
     }
 }
