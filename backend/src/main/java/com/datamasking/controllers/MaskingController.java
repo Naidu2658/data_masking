@@ -18,11 +18,15 @@ public class MaskingController {
     @Autowired
     private ArrayListToXMLService arrayListToXMLService;
 
-    @PostMapping("/applyMasking")
+    @Autowired
+    private TextMaskingService textMaskingService;
+    @PostMapping("/applyTextMasking")
     @CrossOrigin(origins = {"*"})
-    String applyMasking(@RequestBody MaskingRequestBody maskingRequestBody)
+    String applyMasking(@RequestBody TextMaskingRequestBody textMaskingRequestBody) throws ParserConfigurationException
     {
-        return new MaskingService().mask(maskingRequestBody);
+        System.out.println("reached");
+        arrayListToXMLService.buildXMLFromArrayList(textMaskingService.applyAlgorithm(textMaskingRequestBody));
+        return "";
     }
 
     @PostMapping("/applyKAnonymity")
