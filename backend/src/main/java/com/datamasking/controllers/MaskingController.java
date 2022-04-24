@@ -90,10 +90,12 @@ public class MaskingController {
     @CrossOrigin(origins = {"*"})
     String applyMultiMasking(MultipleMaskingRequestBody multipleMaskingRequestBody) throws ParserConfigurationException, FileNotFoundException, IOException
     {
+        System.out.println(multipleMaskingRequestBody.getAlgorithms().size());
         for (AlgorithmItem algorithmItem: multipleMaskingRequestBody.getAlgorithms())
         {
-            if (algorithmItem.getAlgo() == "datamasking")
-                ;
+            System.out.println(algorithmItem.toString());
+            if (algorithmItem.getAlgo().equals("datamasking"))
+                applyMasking(new TextMaskingRequestBody(multipleMaskingRequestBody.getXmlFile(), algorithmItem.getPattern(), algorithmItem.getxPaths()));
             else if (algorithmItem.getAlgo() == "kanonymity")
                 applyKAnonymity(new KAnonymityRequestBody(multipleMaskingRequestBody.getXmlFile(), algorithmItem.getK(), algorithmItem.getxPaths()));
             else if (algorithmItem.getAlgo() == "ldiversity")
@@ -102,7 +104,7 @@ public class MaskingController {
                 applyTcloseness(new TclosenessRequestBody(multipleMaskingRequestBody.getXmlFile(), algorithmItem.getK(), algorithmItem.getT(), algorithmItem.getxPaths(), algorithmItem.getSensitive_attributes()));
             else if (algorithmItem.getAlgo() == "numericgeneralization")
                 applyNumericGeneralization(new NumericGeneralizationRequestBody(multipleMaskingRequestBody.getXmlFile(), algorithmItem.getxPaths(), algorithmItem.getRangeMax(), algorithmItem.getK()));
-            MultipartFile outputFile = new MockMultipartFile("Anonymized.xml", new FileInputStream(new File("/Anonymized.xml")));
+            MultipartFile outputFile = new MockMultipartFile("Anonymized.xml", new FileInputStream(new File("Anonymized.xml")));
             multipleMaskingRequestBody.setXmlFile(outputFile);
         }
         return "";
