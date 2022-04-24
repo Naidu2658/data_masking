@@ -2,6 +2,7 @@ package com.datamasking.controllers;
 import com.datamasking.helperClasses.*;
 import com.datamasking.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -11,6 +12,8 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
 @RestController
 public class MaskingController {
@@ -81,14 +84,12 @@ public class MaskingController {
 
     @PostMapping("/applyMultiMasking")
     @CrossOrigin(origins = {"*"})
-    String applyMultiMasking(MultipleMaskingRequestBody multipleMaskingRequestBody) throws ParserConfigurationException, Fil
+    String applyMultiMasking(MultipleMaskingRequestBody multipleMaskingRequestBody) throws ParserConfigurationException, FileNotFoundException, IOException
     {
         for (AlgorithmItem algorithmItem: multipleMaskingRequestBody.getAlgorithms())
         {
             if (algorithmItem.getAlgo() == "datamasking")
-            {
-
-            }
+                ;
             else if (algorithmItem.getAlgo() == "kanonymity")
                 applyKAnonymity(new KAnonymityRequestBody(multipleMaskingRequestBody.getXmlFile(), algorithmItem.getK(), algorithmItem.getxPaths()));
             else if (algorithmItem.getAlgo() == "ldiversity")
@@ -97,7 +98,8 @@ public class MaskingController {
                 applyTcloseness(new TclosenessRequestBody(multipleMaskingRequestBody.getXmlFile(), algorithmItem.getK(), algorithmItem.getT(), algorithmItem.getxPaths(), algorithmItem.getSensitive_attributes()));
             else if (algorithmItem.getAlgo() == "numericgeneralization")
                 applyNumericGeneralization(new NumericGeneralizationRequestBody(multipleMaskingRequestBody.getXmlFile(), algorithmItem.getxPaths(), algorithmItem.getRangeMax(), algorithmItem.getK()));
-            MultipartFile outputFile = new org.springframework.mock.web.MockMultipartFile("sds", new FileInputStream(new File("/Anonymized.xml")));
+            MultipartFile outputFile = new MockMultipartFile("Anonymized.xml", new FileInputStream(new File("/Anonymized.xml")));
+            multipleMaskingRequestBody.setXmlFile(outputFile);
         }
         return "";
     }
