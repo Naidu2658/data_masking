@@ -1,19 +1,22 @@
 package com.datamasking.controllers;
 import com.datamasking.helperClasses.*;
 import com.datamasking.services.*;
+import org.apache.tomcat.util.json.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.configurationprocessor.json.JSONArray;
+import org.springframework.boot.configurationprocessor.json.JSONException;
+import org.springframework.boot.configurationprocessor.json.JSONObject;
+import org.springframework.http.ResponseEntity;
 import org.springframework.mock.web.MockMultipartFile;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.json.*;
 
 import javax.xml.parsers.ParserConfigurationException;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
+import java.util.ArrayList;
+import java.util.Map;
+import java.util.Set;
 
 @RestController
 public class MaskingController {
@@ -35,6 +38,8 @@ public class MaskingController {
 
     @Autowired
     private TextMaskingService textMaskingService;
+
+    MultipartFile tempfile;
     
     @PostMapping("/applyTextMasking")
     @CrossOrigin(origins = {"*"})
@@ -86,10 +91,27 @@ public class MaskingController {
         return "";
     }
 
+    @PostMapping("/uploaddata")
+    @CrossOrigin(origins = {"*"})
+    String uploaddata(FileUploadRequestBody fileUploadRequestBody) throws IOException {
+
+        System.out.println("hello");
+        OutputStream outputStream = new FileOutputStream("hello.xml");
+        outputStream.write(fileUploadRequestBody.getFile().getBytes());
+//        System.out.println(tempfile.getBytes());
+      return "";
+    }
+
+
     @PostMapping("/applyMultiMasking")
     @CrossOrigin(origins = {"*"})
-    String applyMultiMasking(MultipleMaskingRequestBody multipleMaskingRequestBody) throws ParserConfigurationException, FileNotFoundException, IOException
-    {
+    public ResponseEntity<?> applyMultiMasking(@RequestBody Multiplemask multiplemask) throws ParserConfigurationException, FileNotFoundException, IOException, JSONException {
+
+        System.out.println("hello123");
+        System.out.println(multiplemask.getAlgorithms());
+        MultipartFile inputFile = new MockMultipartFile("hello.xml", new FileInputStream(new File("hello.xml")));
+        MultipleMaskingRequestBody multipleMaskingRequestBody=new MultipleMaskingRequestBody(inputFile, multiplemask.getAlgorithms());
+
         for (AlgorithmItem algorithmItem: multipleMaskingRequestBody.getAlgorithms())
         {
             if (algorithmItem.getAlgo().equals("datamasking"))
@@ -105,6 +127,6 @@ public class MaskingController {
             MultipartFile outputFile = new MockMultipartFile("Anonymized.xml", new FileInputStream(new File("Anonymized.xml")));
             multipleMaskingRequestBody.setXmlFile(outputFile);
         }
-        return "";
+        return ResponseEntity.ok("fine");
     }
 }

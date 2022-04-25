@@ -8,6 +8,7 @@ public class MultipleMaskingRequestBody {
     MultipartFile xmlFile;
     ArrayList<AlgorithmItem> algorithms;
 
+
     public MultipleMaskingRequestBody(MultipartFile xmlFile, ArrayList<AlgorithmItem> algorithms) {
         this.xmlFile = xmlFile;
         this.algorithms = algorithms;

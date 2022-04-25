@@ -46,6 +46,7 @@ public class DataConfigurationController {
                 Set<String> xPaths = xPathGeneratorService.generateXpaths(xmlString);
                 xmlUploadResponseBody.setxPaths(xPaths);
                 xmlUploadResponseBody.setXml(xmlString);
+                System.out.println("hello");
                 return xmlUploadResponseBody;
             }
             catch (Exception e)
